@@ -11,7 +11,7 @@ app.get('/loquesea', function (req, res) {
 
 
   app.get('*', function (req, res) {
-    res.send('404 | NOT FOUND')
+    res.send('404 | NOT FOUND ddddd')
   })
 
 app.listen(3000);
