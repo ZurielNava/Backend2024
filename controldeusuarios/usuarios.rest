@@ -1,0 +1,21 @@
+GET http://localhost:3000/usuarios
+
+###
+GET http://localhost:3000/usuarios/6
+
+###
+POST http://localhost:3000/usuarios/
+content-type: application/json
+
+###
+PUT http://localhost:3000/usuarios/1
+Content-Type: application/json
+
+{
+    "nombre": "Zuriel", 
+    "apellido": "Nava",
+    "email": "Zuriel.nava.hernandez@gmail.com"
+}
+
+###
+DELETE http://localhost:3000/usuarios/1
