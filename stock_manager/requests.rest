@@ -1,1 +1,25 @@
 GET http://localhost:3000/users/
+
+###
+GET http://localhost:3000/users/1
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "zuriel nava"
+}
+
+
+###
+PUT http://localhost:3000/users/4
+Content-Type: application/json
+
+{
+    "name": "Homer J. Simpson"
+}
+
+
+###
+DELETE  http://localhost:3000/users/2
