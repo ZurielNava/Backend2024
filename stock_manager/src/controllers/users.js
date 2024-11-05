@@ -1,14 +1,26 @@
 const { request, response } = require('express');
+const pool = require('../db/connection');
 
-const users = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Doe' },
-    { id: 3, name: 'Bob Smith' },
-];
+// const users = [
+//    { id: 1, name: 'John Doe' },
+//    { id: 2, name: 'Jane Doe' },
+//    { id: 3, name: 'Bob Smith' },
+//];
 
 
-const getAll = (req = request, res = response) => {
-    res.send(users);
+const getAll = async(req = request, res = response) => {
+    let conn;
+    try{
+        conn= await pool.getConnection();
+        const users = await conn.query('SELECT * FROM users');
+        res.send(users);
+
+    }catch(error){
+        res.status(500).send('internal sever error');
+        return
+    } finally{
+        if(conn) conn.end()
+    }
 };
 
 
