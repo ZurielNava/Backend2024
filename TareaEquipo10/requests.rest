@@ -25,7 +25,7 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-  "name": "Mouse",
+  "name": "Casetera",
   "price": 120.99
 }
 

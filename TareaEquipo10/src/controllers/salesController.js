@@ -1,4 +1,4 @@
-let sales = []; // Simulación de base de datos en memoria
+let sales = [];
 
 // Crear una venta
 exports.createSale = (req, res) => {

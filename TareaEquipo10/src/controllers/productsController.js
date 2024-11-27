@@ -1,4 +1,4 @@
-let products = []; // Simulación de base de datos en memoria
+let products = [];
 
 // Obtener todos los productos
 exports.getAllProducts = (req, res) => {
