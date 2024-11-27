@@ -1,0 +1,47 @@
+# Obtener todos los clientes
+GET http://localhost:3000/clients
+Content-Type: application/json
+
+###
+
+# Crear un nuevo cliente
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+  "name": "Juan Pérez",
+  "email": "juan.perez@example.com"
+}
+
+###
+# Obtener todos los productos
+GET http://localhost:3000/products
+Content-Type: application/json
+
+###
+
+# Crear un nuevo producto
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "name": "Mouse",
+  "price": 120.99
+}
+
+###
+# Obtener todas las ventas
+GET http://localhost:3000/sales
+Content-Type: application/json
+
+###
+
+# Crear una nueva venta
+POST http://localhost:3000/sales
+Content-Type: application/json
+
+{
+  "client_id": 1,
+  "product_id": 1,
+  "quantity": 2
+}
