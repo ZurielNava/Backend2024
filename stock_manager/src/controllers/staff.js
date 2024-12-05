@@ -1,152 +1,155 @@
+// controllers/staff.js
 const { request, response } = require('express');
-const pool = require('../db/connection');
-const{ staffQueries }
+const pool = require('../../db/connection');
+const { staffQueries } = require('../models/staff');
 
-const getAllstaff = async(req = request, res = response) => {
+const getAllStaff = async (req = request, res = response) => {
     let conn;
-    try{
-        conn= await pool.getConnection();
-        const users = await pool.query(staffQueries.getAll);
-        res.send(staff);
-
-    }catch(error){
-        res.status(500).send('internal sever error');
-        return
-
-    } finally{
-        if(conn) conn.end()
-    }
-};
-
-//-------------------------------------------------------------------------
-
-const getUserById = async (req = request, res = response) => {
-    const { id } = req.params;
-
-    if (isNaN(id)) {
-        res.status(400).send('Invalid ID');
-        return;
-    }
-
-    let conn;
-    try{
+    try {
         conn = await pool.getConnection();
-        const user =await conn.query(usersQueries.getById,[+id]);
-        if (staff.length == 0) {
-            res.status(404).send('User not found');
-            return;
-        }
-    
-        res.send(user);
-    } catch(error){
+        const staff = await conn.query(staffQueries.getAll);
+        res.send(staff);
+    } catch (error) {
         res.status(500).send(error);
     } finally {
-        if(conn)  conn.end();
+        if (conn) conn.end();
     }
-    
-    const createUser = (req=request, res=response)=>{
-        const{username, pssword,email}= req.body;
-
-        if(!username || !password || !email){
-            res.status(400).send("Bad request. Some fieds are missing.");
-            return;
-        }
-        const user=user.find()
-    }
-    
-
 };
 
-//-------------------------------------------------------------------------
-
-const createstaff = async (req = request, res = response) => {
-    const { username, password, email } = req.body;
-
-    if (!username) {
-        res.status(400).send("Bad request. The 'name' field is missing.");
+const getStaffById = async (req = request, res = response) => {
+    const { id } = req.params;
+    if (isNaN(id)) {
+        res.status(400).send('Invalid ID');
         return;
     }
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const staff = await conn.query(staffQueries.getById, [+id]);
+        
+        if (staff.length === 0) {
+            res.status(404).send('Staff member not found');
+            return;
+        }
+        res.send(staff);
+    } catch (error) {
+        res.status(500).send(error);
+    } finally {
+        if (conn) conn.end();
+    }
+};
 
+// controllers/staff.js
+const createStaff = async (req = request, res = response) => {
+    const { first_name, last_name, birth_date, gender, phone_number, email, address, user_id } = req.body;
+
+    // Validación de datos
+    if (!first_name || !last_name || !birth_date || !gender || !phone_number || !email || !address || isNaN(user_id)) {
+        res.status(400).send('Bad Request. Some fields are missing or invalid');
+        return;
+    }
 
     let conn;
-    try{
-        conn = await pool.getConnection()
-        const user = await conn.query(usersQueries.getByUsername, [username]);
+    try {
+        conn = await pool.getConnection();
 
-        if(user.length>0){
-            res.status(409).send('user name already exists');
+        // Verificar si el user_id existe en la tabla users
+        const [userExists] = await conn.query('SELECT id FROM users WHERE id = ? AND is_active = 1', [user_id]);
+        if (!userExists) {
+            res.status(404).send('User ID provided does not exist or is inactive');
+            return;
+        }
+        // Verificar si el correo ya está en uso
+        const [emailExists] = await conn.query('SELECT id FROM staff WHERE email = ? AND is_active = 1', [email]);
+        if (emailExists) {
+            res.status(409).send('The email provided is already in use');
             return;
         }
 
-        const newUser = await conn.query(usersQueries.create,[username,password,email]);
-
-        if(newUser.affectedRows == 0){
-            res.status(500).send('user could not be created');
+        // Crear el nuevo registro en la tabla staff
+        const newStaff = await conn.query(staffQueries.create, [first_name, last_name, birth_date, gender, phone_number, email, address, user_id]);
+        if (newStaff.affectedRows === 0) {
+            res.status(500).send('Staff member could not be created');
             return;
         }
 
-        res.status(201).send("User created succesfuly");
-
-    }catch(error){
-        res.status(500).send(error)
+        res.status(201).send("Staff member created successfully");
+    } catch (error) {
+        res.status(500).send(error);
+    } finally {
+        if (conn) conn.end();
     }
-}
-
-//-------------------------------------------------------------------------
-
-const updateStaff = (req = request, res = response) => {
-    const { id } = req.params;
-    const { name } = req.body;
-
-    if (isNaN(id)) {
-        res.status(400).send('Invalid ID');
-        return;
-    }
-    const user = users.find(user => user.id === +id);
-
-    if (!user) {
-        res.status(404).send('User not found');
-        return;
-    }
-
-    users.forEach(user => {
-        if (user.id === +id) {
-            user.name = name;
-        }
-    });
-    res.send("User updated successfully");
 };
 
-//-------------------------------------------------------------------------
 
-const deleteUser = async (req=request, res= response) =>{
-    const {id} = req.params;
+
+const updateStaff = async (req = request, res = response) => {
+    const { id } = req.params;
+    const { first_name, last_name, email, phone_number, address, user_id } = req.body;
+
+    if (isNaN(id) || !first_name || !last_name || !email || !phone_number || !address || !user_id) {
+        res.status(400).send("Invalid request");
+        return;
+    }
+    
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const staff = await conn.query(staffQueries.getById, [+id]);
+        if (staff.length === 0) {
+            res.status(404).send("Staff member not found");
+            return;
+        }
+
+        // Verificar si el correo ya está en uso por otro registro
+        const [emailExists] = await conn.query('SELECT id FROM staff WHERE email = ? AND id != ? AND is_active = 1', [email, +id]);
+        if (emailExists) {
+            res.status(409).send('The email provided is already in use');
+            return;
+        }
+
+        const result = await conn.query(staffQueries.update, [first_name, last_name, email, phone_number, address, user_id, +id]);
+        if (result.affectedRows === 0) {
+            res.status(500).send("Staff member could not be updated");
+            return;
+        }
+
+        res.send("Staff member updated successfully");
+    } catch (error) {
+        res.status(500).send(error);
+    } finally {
+        if (conn) conn.end();
+    }
+};
+
+const deleteStaff = async (req = request, res = response) => {
+    const { id } = req.params;
 
     if (isNaN(id)) {
-        res.status(400).send('Invalid ID');
+        res.status(400).send('ID must be a number');
         return;
     }
 
-    try{
-
+    let conn;
+    try {
         conn = await pool.getConnection();
-        const user = conn.query(usersQueries.getById,[+id]);
-        if (!user.length == 0) {
-        res.status(404).send('User not found');
-        return;
+        const staff = await conn.query(staffQueries.getById, [+id]);
+        if (staff.length === 0) {
+            res.status(404).send('Staff member not found');
+            return;
         }
-        const deletedUser = await conn.query(usersQueries.delete, [+id]);
-        if(deleteUser.affectedRows == 0){
-            res.status(500).send('user')
-            return
-        }
-        res.send("user deleted ")
-    }catch(error){
-        res.status(500).send(error);
-        return;
-    }finally{
-        if(conn) conn.end();
-    }
-}
 
-module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
+        const deletedStaff = await conn.query(staffQueries.delete, [+id]);
+        if (deletedStaff.affectedRows === 0) {
+            res.status(500).send('Staff member could not be deleted');
+            return;
+        }
+        res.send('Staff member deleted successfully');
+    } catch (error) {
+        res.status(500).send(error);
+    } finally {
+        if (conn) conn.end();
+    }
+};
+
+module.exports = { getAllStaff, getStaffById, createStaff, updateStaff, deleteStaff };

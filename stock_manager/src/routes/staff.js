@@ -1,13 +1,13 @@
+// routes/staff.js
 const { Router } = require('express');
-const { getAllUsers, getUserById, createUser, updateUser, deleteUser } = require('../controllers/staff');
+const { getAllStaff, getStaffById, createStaff, updateStaff, deleteStaff } = require('../controllers/staff');
 
 const router = Router();
 
-router.get('/', getAllUsers);
-router.get('/:id', getUserById);
-router.post('/', createUser);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
-
+router.get('/', getAllStaff);
+router.get('/:id', getStaffById);
+router.post('/', createStaff);
+router.put('/:id', updateStaff);
+router.delete('/:id', deleteStaff);
 
 module.exports = router;

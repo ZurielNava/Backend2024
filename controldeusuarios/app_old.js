@@ -1,33 +1,31 @@
-const express = require('express');
+const express = require("express")
 
-const app = express();
+const app= express()
 
-app.get("/",(req, res) => {
-    res.status(200).send("Hola mundo!!!");
-}); //GET cuando queramos obtener informacion
+app.post("/", (req, res)=>{
+    res.status(404).send("Hola desde POST!");
+});//POST PARA CREAR UN NUEVO RECURSO
 
-app.get("/prueba",(req, res) => {
-    res.status(200).send("Hola desde la ruta de prueba");
-}); //GET cuando queramos obtener informacion
+app.get("/", (req, res)=>{
+    res.status(404).send("Hola desde GET!");
+});//GET OBTENER INFORMACION
 
-app.post("/",(req, res) => {
-    res.status(200).send("Hola desde post");
-}); //POST crear un nuevo recurso o acceder a un recurso
+app.get("/prueba", (req, res)=>{
+    res.status(404).send("Hola desde la ruta PRUEBA!");
+});//GET OBTENER INFORMACION
 
-app.put("/",(req, res) => {
-    res.status(200).send("Hola desde PUT");
-});//PUT para Actualizar un recurso.... completamente
+app.put("/", (req, res)=>{
+    res.status(404).send("Hola desde PUT!");
+});//PUT PARA ACTUALIZAR UN RECURSO COMPLETO
 
-app.patch("/",(req, res) => {
-    res.status(200).send("Hola desde PATCH holis");
-});//PATCH Actualizar un recurso parcialmente.... 
+app.patch("/", (req, res)=>{
+    res.status(404).send("Hola desde PATCH!");
+});//PATCH PARA ACTUALIZAR UN RECURSO PARCIALMENTE
 
-app.delete("/",(req, res) => {
-    res.status(200).send("Hola desde DELETE");
-});// DELETE elimina un recurso... entender que hay dos tipos de eliminacion hard o soft.... soft modifica un campo de registro
+app.delete("/", (req, res)=>{
+    res.status(404).send("Hola desde DELETE!");
+});//DELETE PARA ELIMINAR UN RECURSO
 
-app.listen(3000,()=> {
-
+app.listen(3000, ()=>{
     console.log("Servidor corriendo en http://localhost:3000");
-
-}); 
+});

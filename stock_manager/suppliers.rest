@@ -1,0 +1,32 @@
+POST http://localhost:3000/suppliers
+Content-Type: application/json
+
+{
+"rfc": "RFCXAXX010101", 
+"name": "Supplier 3", 
+"description": "Proveedor de mantenimiento", 
+"number_phone": "2871454520", 
+"email": "teo@example.com", 
+"address": "Privada antonio cruz"
+}
+
+### 
+GET http://localhost:3000/suppliers
+
+### 
+GET http://localhost:3000/suppliers/RFC987654321X
+
+### 
+PUT http://localhost:3000/suppliers/RFC987654321X 
+content-Type: application/json
+
+{
+"name": "Supplier 2 Updated", 
+"description": "Proveedor actualizado", 
+"number_phone": "0987654322", 
+"email": "supplier2_updated@example.com", 
+"address": "Nueva Dirección 123"
+}
+
+### 
+DELETE http://localhost:3000/suppliers/RFC987654321X
