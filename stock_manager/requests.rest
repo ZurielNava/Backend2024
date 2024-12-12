@@ -1,27 +1,77 @@
-GET http://localhost:3000/users/
+GET http://localhost:3000/users
 
 ###
-
-GET http://localhost:3000/users/1
-
-###
-
-POST http://localhost:3000/users
+GET http://localhost:3000/users/6
+### Crear nuevo usuario
+POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-    "username": "zuriel nava",
-    "password": "12345678",
-    "email": "zuriel@example.com"
+    "username": "Pablo",
+    "password": "Zuriel12345",
+    "email" : "zuriel@gmail.com"
 }
-###
+
+### Actualizar usuario
 PUT http://localhost:3000/users/4
 Content-Type: application/json
 
 {
-    "name": "Homer J. Simpson"
+    "password": "zuriel12345"
+}
+
+### Eliminar usuario
+DELETE http://localhost:3000/users/3
+
+
+###
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "username": "Zuriel",
+    "password": "abc12345"
+}
+
+
+###
+# Obtener todos los registros de staff activos
+GET http://localhost:3000/staff
+
+###
+# Obtener un registro de staff por ID
+GET http://localhost:3000/staff/1
+
+###
+# Crear un nuevo registro de staff
+POST http://localhost:3000/staff/
+Content-Type: application/json
+
+{
+    "first_name": "evelin",
+    "last_name": "montalvo",
+    "birth_date": "2003-11-04",
+    "gender": "F",
+    "phone_number": "5551234567",
+    "email": "montalvommt@gmaile.com",
+    "address": "tuxtepec",
+    "user_id": 4
 }
 
 ###
+# Actualizar un registro de staff
+PUT http://localhost:3000/staff/4
+Content-Type: application/json
 
-DELETE http://localhost:3000/users/2
+{
+    "first_name": "evelinmm",
+    "last_name": "montalvo",
+    "email": "montalvo@gmaile.com",
+    "phone_number": "2871002202",
+    "address": "siglo",
+    "user_id": 1
+}
+
+###
+# Eliminar un registro de staff (cambio de is_active a 0)
+DELETE http://localhost:3000/staff/1

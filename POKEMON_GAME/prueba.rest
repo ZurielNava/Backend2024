@@ -1,0 +1,30 @@
+GET http://localhost:3000/pokemons
+###
+GET http://localhost:3000/pokemons/153
+###
+POST http://localhost:3000/pokemons/
+Content-Type: application/json
+
+{
+    "name": "emboar",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/500.svg"
+    
+    
+}
+
+###
+PUT http://localhost:3000/pokemons/152
+Content-Type: application/json
+
+{
+    "name": "emboar",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/500.svg"
+    
+    
+}
+
+###
+GET http://localhost:3000/pokemons/play
+
+###
+DELETE http://localhost:3000/pokemons/153

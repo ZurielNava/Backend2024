@@ -1,9 +1,20 @@
 const {request, response} = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const pool = require('../db/connection');
 const {userQueries} = require('../models/users');
+require('dotenv').config();
+
+const secret = process.env.SECRET;
 
 const saltRounds = 10;
+
+
+const userProtected = async(req = request, res = response) =>{
+  console.log({req})
+  res.send({message: "you have access!!"});
+}
+
 
 const getAllUsers = async (req = request, res=response) => {
     let conn;
@@ -51,6 +62,19 @@ const getUserById = async (req = request, res= response) =>{
 //agregar un usuario
 const CreateUser = async (req = request, res = response) => {
     const { first_name, last_name, email, password} = req.body;
+
+
+  const {id, is_admin} = req;
+
+  if(!id || is_admin == undefined){
+    res.status(400).send({message: "Missing required fields"});
+    return;
+  }
+
+  if (is_admin !== 1){
+    res.status(403).send({message: "you do not have enough privileges"});
+    return;
+  }
 
     if (!first_name || !last_name || !email || !password) {
         res.status(400).send('Bad Request. Some fields are missing');
@@ -181,4 +205,5 @@ module.exports = {
     CreateUser,
     updateUser,
     destroyUser,
+    userProtected
 };

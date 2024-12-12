@@ -1,17 +1,21 @@
 GET http://localhost:3000/users
-
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNfYWRtaW4iOjEsImlhdCI6MTczNDAyMTY3NSwiZXhwIjoxNzM0MDIxOTc1fQ.ph4XCdwpGf90C4xnRfx1aP8I_EDLf44o2lZZnGCUwMA
 ###
 GET http://localhost:3000/users/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNfYWRtaW4iOjEsImlhdCI6MTczNDAyMTY3NSwiZXhwIjoxNzM0MDIxOTc1fQ.ph4XCdwpGf90C4xnRfx1aP8I_EDLf44o2lZZnGCUwMA
 
 ###
 POST http://localhost:3000/users/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaXNfYWRtaW4iOjAsImlhdCI6MTczNDAyMjg1MywiZXhwIjoxNzM0MDIzMTUzfQ.goEij-u_VuBxSbO9OeXGCD29l7sBMAE_wkv9BlFMKjI
 
 {
-    "first_name": "Zuriel",
-    "last_name": "Nava",
-    "email" : "Nava@gmail.com",
-    "password": "1122334455"
+    "first_name": "Elizabeth",
+    "last_name": "Pavon Sanchez",
+    "email" : "pavoneli@gmail.com",
+    "password": "MyPassword123"
     
 }
 ###
@@ -19,9 +23,9 @@ PUT http://localhost:3000/users/2
 Content-Type: application/json
 
 {
-    "first_name": "Evelin ",
-    "last_name": "Montalvo",
-    "email" : "Montalvo@gmail.com"
+    "first_name": "Pablo Zuriel",
+    "last_name": "Nava Hernandez",
+    "email" : "NavaHernandez@gmail.com"
     
 }
 

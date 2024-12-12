@@ -1,0 +1,17 @@
+POST  http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "Zuriel@gmail.com",
+    "password": "MyPassword123"
+}
+
+#{
+#    "email": "zurielnava@gmail.com",
+#    "password": "MyPassword"
+#}
+
+###
+GET http://localhost:3000/users/protected
+Content-Type:  application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNfYWRtaW4iOjEsImlhdCI6MTczNDAyMTE2NSwiZXhwIjoxNzM0MDIxNDY1fQ.9SyhgOGt9T6hxo0hVAPJPii3wWpq8o2MCUcFbQzmnhY
